@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jerrod Eiman</Authors>
+    <Description>Reflection utilities.</Description>
+    <Copyright>Hat Trick Labs</Copyright>
+    <PackageLicenseUrl>https://github.com/HatTrickLabs/txt/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/HatTrickLabs/txt</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HatTrickLabs/txt</RepositoryUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageTags>reflection expression</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>
