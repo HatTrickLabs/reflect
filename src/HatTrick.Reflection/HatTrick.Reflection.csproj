@@ -5,12 +5,13 @@
     <Authors>Jerrod Eiman</Authors>
     <Description>Reflection utilities.</Description>
     <Copyright>Hat Trick Labs</Copyright>
-    <PackageLicenseUrl>https://github.com/HatTrickLabs/txt/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/HatTrickLabs/txt</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/HatTrickLabs/txt</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/HatTrickLabs/reflect/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/HatTrickLabs/reflect</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HatTrickLabs/reflect</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
 </Project>
