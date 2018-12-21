@@ -11,7 +11,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
 </Project>

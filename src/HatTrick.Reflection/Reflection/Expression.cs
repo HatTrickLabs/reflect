@@ -58,7 +58,7 @@ namespace HatTrick.Reflection
                 if (itemExists && o != null && memberAccessorIdx > -1)
                 {
                     //recursive call...
-                    o = ReflectItem(o, expression.Substring(++memberAccessorIdx, expression.Length - memberAccessorIdx));
+                    o = ReflectItem(o, expression.Substring(++memberAccessorIdx, expression.Length - memberAccessorIdx), throwOnNoItemExists);
                 }
 
                 if (!itemExists && throwOnNoItemExists)
