@@ -10,8 +10,11 @@ namespace HatTrick.Reflection.TestHarness
 {
     class Program
     {
+        #region internals
         static Person _person;
+        #endregion
 
+        #region main
         static void Main(string[] args)
         {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
@@ -41,7 +44,9 @@ namespace HatTrick.Reflection.TestHarness
             Console.WriteLine($"processed in {sw.ElapsedMilliseconds} milliseconds, press [Enter] to exit");
             Console.ReadLine();
         }
+        #endregion
 
+        #region init person
         static void InitPerson()
         {
             _person = new Person()
@@ -64,7 +69,9 @@ namespace HatTrick.Reflection.TestHarness
                 }
             };
         }
+        #endregion
 
+        #region reflect properties from class
         static void ReflectPropertiesFromClass()
         {
             Person p = _person;
@@ -79,7 +86,9 @@ namespace HatTrick.Reflection.TestHarness
             string addressState = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.State");
             string addressZip = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Zip");
         }
+        #endregion
 
+        #region reflcet fields from class
         static void ReflectFieldsFromClass()
         {
             Person p = _person;
@@ -88,7 +97,9 @@ namespace HatTrick.Reflection.TestHarness
             int petAge = (int)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Age");
             PetType petType = (PetType)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.PetType");
         }
+        #endregion
 
+        #region reflcet from anonymous
         static void ReflectFromAnonymousType()
         {
             var p = new
@@ -126,7 +137,9 @@ namespace HatTrick.Reflection.TestHarness
             int petAge = (int)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Age");
             PetType petType = (PetType)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.PetType");
         }
+        #endregion
 
+        #region reflect from dictionary
         static void ReflectFromDictionary()
         {
             Dictionary<string, object> p = new Dictionary<string, object>()
@@ -166,14 +179,18 @@ namespace HatTrick.Reflection.TestHarness
             int petAge = (int)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Age");
             PetType petType = (PetType)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.PetType");
         }
+        #endregion
 
+        #region null on no item exists
         static void NullOnNoItemExists()
         {
             Person p = _person;
 
             string petFirstName = (string)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.FirstName", false);
         }
+        #endregion
 
+        #region throw ex on no item exists
         static void ThrowExOnNoItemExists()
         {
             Person p = _person;
@@ -187,5 +204,6 @@ namespace HatTrick.Reflection.TestHarness
                 string msg = nie.Message;
             }
         }
+        #endregion
     }
 }
