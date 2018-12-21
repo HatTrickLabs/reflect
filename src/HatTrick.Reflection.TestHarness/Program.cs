@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Data.SqlClient;
 using HatTrick.Reflection;
 
 namespace HatTrick.Reflection.TestHarness
@@ -142,7 +138,7 @@ namespace HatTrick.Reflection.TestHarness
         #region reflect from dictionary
         static void ReflectFromDictionary()
         {
-            Dictionary<string, object> p = new Dictionary<string, object>()
+            IDictionary<string, object> p = new Dictionary<string, object>()
             {
                 { "FirstName", "Charlie" },
                 { "LastName", "Brown" },
