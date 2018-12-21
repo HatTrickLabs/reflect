@@ -10,12 +10,11 @@ namespace HatTrick.Reflection
         public static class Expression
         {
             #region reflect item
-            public static object ReflectItem(object source, string expression, bool throwOnNoPropExists = true)
+            public static object ReflectItem(object source, string expression, bool throwOnNoItemExists = true)
             {
                 if (source == null) { throw new ArgumentNullException(nameof(source)); }
                 if (expression == null) { throw new ArgumentNullException(nameof(expression)); }
 
-                //re-usable internal object o
                 object o = source;
 
                 var itemExists = false;
@@ -33,7 +32,7 @@ namespace HatTrick.Reflection
                         o = idict[thisExpression];
                     }
                 }
-                else
+                else //check for a property
                 {
                     Type t = o.GetType();
 
@@ -44,7 +43,7 @@ namespace HatTrick.Reflection
                         itemExists = true;
                         o = p.GetValue(o, null);
                     }
-                    else
+                    else //check for a field
                     {
                         FieldInfo f = t.GetField(thisExpression);
 
@@ -62,9 +61,9 @@ namespace HatTrick.Reflection
                     o = ReflectItem(o, expression.Substring(++memberAccessorIdx, expression.Length - memberAccessorIdx));
                 }
 
-                if (!itemExists && throwOnNoPropExists)
+                if (!itemExists && throwOnNoItemExists)
                 {
-                    throw new NoPropertyExistsException($"Property does not exist on source object. Property: {expression}, Bound Type: {source.GetType()}");
+                    throw new NoItemExistsException($"Item does not exist on source object. Item: {expression}, Bound Type: {source.GetType()}");
                 }
 
                 return itemExists ? o : null;
