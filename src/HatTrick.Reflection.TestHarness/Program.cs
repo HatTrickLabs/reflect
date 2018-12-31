@@ -47,7 +47,8 @@ namespace HatTrick.Reflection.TestHarness
         {
             _person = new Person()
             {
-                FullName = "Charlie Brown",
+                FirstName = "Charlie",
+                LastName = "Brown",
                 DateOfBirth = DateTime.Parse("1998-05-05"),
                 BillingAddress = new Address()
                 {

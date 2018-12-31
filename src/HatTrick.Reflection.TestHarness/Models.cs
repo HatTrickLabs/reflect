@@ -10,9 +10,8 @@ namespace HatTrick.Reflection.TestHarness
     public class Person
     {
         #region interface
-        public string FullName { get; set; }
-        public string FirstName => this.FullName?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0] ?? null;
-        public string LastName => this.FullName?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1] ?? null;
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public Address BillingAddress { get; set; }
         public bool HasPet => this.HouseholdPet != null;
