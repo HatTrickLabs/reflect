@@ -4,12 +4,16 @@ using System.Reflection;
 
 namespace HatTrick.Reflection
 {
-    //reflects nested class members; i.e. itemExpression="User.Address.City"....JRod
     public static partial class ReflectionHelper
     {
         public static class Expression
         {
             #region reflect item
+            public static T ReflectItem<T>(object source, string expression, bool throwOnNoItemExists = true)
+            {
+                return (T)ReflectItem(source, expression, throwOnNoItemExists);
+            }
+
             public static object ReflectItem(object source, string expression, bool throwOnNoItemExists = true)
             {
                 if (source == null) { throw new ArgumentNullException(nameof(source)); }
@@ -22,7 +26,7 @@ namespace HatTrick.Reflection
                 int memberAccessorIdx = expression.IndexOf('.');
                 string thisExpression = (memberAccessorIdx > -1) ? expression.Substring(0, memberAccessorIdx) : expression;
 
-                //if the caller is reflecting data from a dictionary, attempt dictionary lookup
+                //attempt dictionary lookup
                 IDictionary idict;
                 if ((idict = source as IDictionary) != null)
                 {
