@@ -73,15 +73,15 @@ namespace HatTrick.Reflection.TestHarness
         {
             Person p = _person;
 
-            string firstName = (string)ReflectionHelper.Expression.ReflectItem(p, "FirstName");
-            string lastName = (string)ReflectionHelper.Expression.ReflectItem(p, "LastName");
-            DateTime? DOB = (DateTime?)ReflectionHelper.Expression.ReflectItem(p, "DateOfBirth");
+            string firstName = p.ReflectItem<string>("FirstName");
+            string lastName = p.ReflectItem<string>("LastName");
+            DateTime? DOB = p.ReflectItem<DateTime?>("DateOfBirth");
 
-            string addressLine1 = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Line1");
-            string addressLine2 = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Line2");
-            string addressCity = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.City");
-            string addressState = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.State");
-            string addressZip = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Zip");
+            string addressLine1 = p.ReflectItem<string>("BillingAddress.Line1");
+            string addressLine2 = p.ReflectItem<string>("BillingAddress.Line2");
+            string addressCity = p.ReflectItem<string>("BillingAddress.City");
+            string addressState = p.ReflectItem<string>("BillingAddress.State");
+            string addressZip = p.ReflectItem<string>("BillingAddress.Zip");
         }
         #endregion
 
@@ -90,9 +90,9 @@ namespace HatTrick.Reflection.TestHarness
         {
             Person p = _person;
 
-            string petName = (string)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Name");
-            int petAge = (int)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Age");
-            PetType petType = (PetType)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.PetType");
+            string petName = p.ReflectItem<string>("HouseholdPet.Name");
+            int petAge = p.ReflectItem<int>("HouseholdPet.Age");
+            PetType petType = p.ReflectItem<PetType>("HouseholdPet.PetType");
         }
         #endregion
 
@@ -120,19 +120,19 @@ namespace HatTrick.Reflection.TestHarness
                 }
             };
 
-            string firstName = (string)ReflectionHelper.Expression.ReflectItem(p, "FirstName");
-            string lastName = (string)ReflectionHelper.Expression.ReflectItem(p, "LastName");
-            DateTime? DOB = (DateTime?)ReflectionHelper.Expression.ReflectItem(p, "DateOfBirth");
+            string firstName = p.ReflectItem<string>("FirstName");
+            string lastName = p.ReflectItem<string>("LastName");
+            DateTime? DOB = p.ReflectItem<DateTime?>("DateOfBirth");
 
-            string addressLine1 = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Line1");
-            string addressLine2 = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Line2");
-            string addressCity = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.City");
-            string addressState = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.State");
-            string addressZip = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Zip");
+            string addressLine1 = p.ReflectItem<string>("BillingAddress.Line1");
+            string addressLine2 = p.ReflectItem<string>("BillingAddress.Line2");
+            string addressCity = p.ReflectItem<string>("BillingAddress.City");
+            string addressState = p.ReflectItem<string>("BillingAddress.State");
+            string addressZip = p.ReflectItem<string>("BillingAddress.Zip");
 
-            string petName = (string)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Name");
-            int petAge = (int)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Age");
-            PetType petType = (PetType)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.PetType");
+            string petName = p.ReflectItem<string>("HouseholdPet.Name");
+            int petAge = p.ReflectItem<int>("HouseholdPet.Age");
+            PetType petType = p.ReflectItem<PetType>("HouseholdPet.PetType");
         }
         #endregion
 
@@ -162,19 +162,19 @@ namespace HatTrick.Reflection.TestHarness
                 }
             };
 
-            string firstName = (string)ReflectionHelper.Expression.ReflectItem(p, "FirstName");
-            string lastName = (string)ReflectionHelper.Expression.ReflectItem(p, "LastName");
-            DateTime? DOB = (DateTime?)ReflectionHelper.Expression.ReflectItem(p, "DateOfBirth");
+            string firstName = p.ReflectItem<string>("FirstName");
+            string lastName = p.ReflectItem<string>("LastName");
+            DateTime? DOB = p.ReflectItem<DateTime?>("DateOfBirth");
 
-            string addressLine1 = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Line1");
-            string addressLine2 = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Line2");
-            string addressCity = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.City");
-            string addressState = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.State");
-            string addressZip = (string)ReflectionHelper.Expression.ReflectItem(p, "BillingAddress.Zip");
+            string addressLine1 = p.ReflectItem<string>("BillingAddress.Line1");
+            string addressLine2 = p.ReflectItem<string>("BillingAddress.Line2");
+            string addressCity = p.ReflectItem<string>("BillingAddress.City");
+            string addressState = p.ReflectItem<string>("BillingAddress.State");
+            string addressZip = p.ReflectItem<string>("BillingAddress.Zip");
 
-            string petName = (string)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Name");
-            int petAge = (int)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.Age");
-            PetType petType = (PetType)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.PetType");
+            string petName = p.ReflectItem<string>("HouseholdPet.Name");
+            int petAge = p.ReflectItem<int>("HouseholdPet.Age");
+            PetType petType = p.ReflectItem<PetType>("HouseholdPet.PetType");
         }
         #endregion
 
@@ -183,7 +183,7 @@ namespace HatTrick.Reflection.TestHarness
         {
             Person p = _person;
 
-            string petFirstName = (string)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.FirstName", false);
+            string petFirstName = p.ReflectItem<string>("HouseholdPet.FirstName", false);
         }
         #endregion
 
@@ -194,7 +194,7 @@ namespace HatTrick.Reflection.TestHarness
 
             try
             {
-                string petFirstName = (string)ReflectionHelper.Expression.ReflectItem(p, "HouseholdPet.FirstName");
+                string petFirstName = p.ReflectItem<string>("HouseholdPet.FirstName");
             }
             catch (NoItemExistsException nie)
             {

@@ -6,6 +6,17 @@ namespace HatTrick.Reflection
 {
     public static partial class ReflectionHelper
     {
+        #region extension
+        public static object ReflectItem(this object source, string expression, bool throwOnNoItemExists = true)
+        {
+            return Expression.ReflectItem(source, expression, throwOnNoItemExists);
+        }
+
+        public static T ReflectItem<T>(this object source, string expression, bool throwOnNoItemExists = true)
+        {
+            return Expression.ReflectItem<T>(source, expression, throwOnNoItemExists);
+        }
+        #endregion
         public static class Expression
         {
             #region reflect item
