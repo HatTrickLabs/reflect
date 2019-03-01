@@ -11,7 +11,8 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>Implemented ReflectItem&lt;T&gt; as extension method directly on object.</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
