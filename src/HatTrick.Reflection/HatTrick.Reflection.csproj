@@ -2,17 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Jerrod Eiman</Authors>
+    <Authors>HatTrick Labs</Authors>
     <Description>Reflection utilities.</Description>
     <Copyright>Hat Trick Labs</Copyright>
-    <PackageLicenseUrl>https://github.com/HatTrickLabs/reflect/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/HatTrickLabs/reflect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HatTrickLabs/reflect</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>Implemented ReflectItem&lt;T&gt; as extension method directly on object.</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>Bug fix:  Reflect instance properties off of IDictionary&lt;TKey, TValue&gt;.</PackageReleaseNotes>
+    <Company>HatTrick Labs LLC</Company>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>
