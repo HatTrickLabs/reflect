@@ -175,6 +175,12 @@ namespace HatTrick.Reflection.TestHarness
             string petName = p.ReflectItem<string>("HouseholdPet.Name");
             int petAge = p.ReflectItem<int>("HouseholdPet.Age");
             PetType petType = p.ReflectItem<PetType>("HouseholdPet.PetType");
+
+            //resolve dictionary first class properties
+            ICollection<string> keys = p.ReflectItem<ICollection<string>>("Keys");
+            ICollection<object> values = p.ReflectItem<ICollection<object>>("Values");
+            int count = p.ReflectItem<int>("Count");
+
         }
         #endregion
 

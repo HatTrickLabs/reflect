@@ -47,7 +47,8 @@ namespace HatTrick.Reflection
                         o = idict[thisExpression];
                     }
                 }
-                else //check for a property
+                
+                if (!itemExists)//check for a property
                 {
                     Type t = o.GetType();
 
