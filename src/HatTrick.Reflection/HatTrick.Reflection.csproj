@@ -11,10 +11,22 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
-    <PackageReleaseNotes>Bug fix:  Reflect instance properties off of IDictionary&lt;TKey, TValue&gt;.</PackageReleaseNotes>
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Modified format of NoItemExistsException to improve readability.
+Moved sln file into repo root.
+Added Hat Trick Labs nuget icon.</PackageReleaseNotes>
     <Company>HatTrick Labs LLC</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>htl-nuget-logo.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\build\htl-nuget-logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

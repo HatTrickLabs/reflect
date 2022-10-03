@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
+using System.Text;
 
 namespace HatTrick.Reflection
 {
@@ -38,8 +39,7 @@ namespace HatTrick.Reflection
                 string thisExpression = (memberAccessorIdx > -1) ? expression.Substring(0, memberAccessorIdx) : expression;
 
                 //attempt dictionary lookup
-                IDictionary idict;
-                if ((idict = source as IDictionary) != null)
+                if (source is IDictionary idict)
                 {
                     if (idict.Contains(thisExpression))
                     {
@@ -79,7 +79,8 @@ namespace HatTrick.Reflection
 
                 if (!itemExists && throwOnNoItemExists)
                 {
-                    throw new NoItemExistsException($"Item does not exist on source object. Item: {expression}, Bound Type: {source.GetType()}");
+                    string expr = thisExpression.Length > 128 ? (expression.Substring(0, 125) + "...") : thisExpression;
+                    throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{expr}'");
                 }
 
                 return itemExists ? o : null;
