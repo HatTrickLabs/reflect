@@ -12,7 +12,9 @@
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.6</Version>
-    <PackageReleaseNotes>Modified format of NoItemExistsException to improve readability.</PackageReleaseNotes>
+    <PackageReleaseNotes>Modified format of NoItemExistsException to improve readability.
+Moved sln file into repo root.
+Added Hat Trick Labs nuget icon.</PackageReleaseNotes>
     <Company>HatTrick Labs LLC</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>htl-nuget-logo.png</PackageIcon>
