@@ -39,8 +39,7 @@ namespace HatTrick.Reflection
                 string thisExpression = (memberAccessorIdx > -1) ? expression.Substring(0, memberAccessorIdx) : expression;
 
                 //attempt dictionary lookup
-                IDictionary idict;
-                if ((idict = source as IDictionary) != null)
+                if (source is IDictionary idict)
                 {
                     if (idict.Contains(thisExpression))
                     {
