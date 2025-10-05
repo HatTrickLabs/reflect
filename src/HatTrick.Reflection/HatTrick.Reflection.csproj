@@ -25,4 +25,7 @@ Implemented ReadOnlySpan of char where possible.</PackageReleaseNotes>
       </PackagePath>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
 </Project>

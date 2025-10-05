@@ -40,7 +40,7 @@ namespace HatTrick.Reflection
                 int dotIdx = expression.IndexOf('.');
 
                 string name = (dotIdx > -1) 
-                    ? expression.Slice(0, dotIdx) .ToString()
+                    ? expression.Slice(0, dotIdx).ToString()
                     : expression.ToString();
 
                 //attempt dictionary lookup
