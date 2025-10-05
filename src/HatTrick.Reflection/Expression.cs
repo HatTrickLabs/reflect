@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
-using System.Text;
 
 namespace HatTrick.Reflection
 {
     public static partial class ReflectionHelper
     {
         #region [extensions]
-        public static object ReflectItem(this object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
+        public static object ReflectItem(this object source, string expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem(source, expression, throwOnNoItemExists);
         }
 
-        public static T ReflectItem<T>(this object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
+        public static T ReflectItem<T>(this object source, string expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem<T>(source, expression, throwOnNoItemExists);
         }
@@ -23,70 +22,68 @@ namespace HatTrick.Reflection
         public static class Expression
         {
             #region reflect item
-            public static T ReflectItem<T>(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
+            public static T ReflectItem<T>(object source, string expression, bool throwOnNoItemExists = true)
             {
                 return (T)ReflectItem(source, expression, throwOnNoItemExists);
             }
 
             public static object ReflectItem(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
             {
-                if (source == null) { throw new ArgumentNullException(nameof(source)); }
-                if (expression.IsEmpty) { throw new ArgumentException($"{nameof(ReadOnlySpan<char>)} cannot be empty.", nameof(expression)); }
+                if (source == null)
+                    throw new ArgumentNullException(nameof(source));
 
-                object o = source;
+                if (expression.IsEmpty)
+                    throw new ArgumentException($"{nameof(ReadOnlySpan<char>)} cannot be empty.", nameof(expression));
 
-                var itemExists = false;
+                var exists = false;
 
-                int memberAccessorIdx = expression.IndexOf('.');
-                ReadOnlySpan<char> thisExpression = (memberAccessorIdx > -1) ? expression.Slice(0, memberAccessorIdx) : expression;
+                int dotIdx = expression.IndexOf('.');
+
+                string name = (dotIdx > -1) 
+                    ? expression.Slice(0, dotIdx) .ToString()
+                    : expression.ToString();
 
                 //attempt dictionary lookup
                 if (source is IDictionary idict)
                 {
-                    string expr = thisExpression.ToString();
-                    if (idict.Contains(expr))
+                    if (idict.Contains(name))
                     {
-                        itemExists = true;
-                        o = idict[expr];
+                        exists = true;
+                        source = idict[name];
                     }
                 }
-                
-                if (!itemExists)//check for a property
-                {
-                    Type t = o.GetType();
-                    string expr = thisExpression.ToString();
-                    PropertyInfo p = t.GetProperty(expr);
 
+                if (!exists)
+                {   
+                    //check for a property
+                    Type t = source.GetType();
+                    PropertyInfo p = t.GetProperty(name);
                     if (p != null)
                     {
-                        itemExists = true;
-                        o = p.GetValue(o, null);
+                        exists = true;
+                        source = p.GetValue(source, null);
                     }
                     else //check for a field
                     {
-                        FieldInfo f = t.GetField(expr);
-
+                        FieldInfo f = t.GetField(name);
                         if (f != null)
                         {
-                            itemExists = true;
-                            o = f.GetValue(o);
+                            exists = true;
+                            source = f.GetValue(source);
                         }
                     }
                 }
 
-                if (itemExists && o != null && memberAccessorIdx > -1)
+                if (exists && source != null && dotIdx > -1)
                 {
                     //recursive call...
-                    o = ReflectItem(o, expression.Slice(++memberAccessorIdx, expression.Length - memberAccessorIdx), throwOnNoItemExists);
+                    source = ReflectItem(source, expression.Slice(++dotIdx, expression.Length - dotIdx), throwOnNoItemExists);
                 }
 
-                if (!itemExists && throwOnNoItemExists)
-                {
-                    string expr = thisExpression.Length > 128 ? (expression.Slice(0, 125).ToString() + "...") : thisExpression.ToString();
-                    throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{expr}'");
-                }
+                if (!exists && throwOnNoItemExists)
+                    throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{name}'");
 
-                return itemExists ? o : null;
+                return exists ? source : null;
             }
             #endregion
         }

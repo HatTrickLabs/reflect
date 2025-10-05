@@ -84,7 +84,7 @@ namespace HatTrick.Reflection.TestHarness
         }
         #endregion
 
-        #region reflcet fields from class
+        #region reflect fields from class
         static void ReflectFieldsFromClass()
         {
             Person p = _person;
