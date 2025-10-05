@@ -8,12 +8,12 @@ namespace HatTrick.Reflection
     public static partial class ReflectionHelper
     {
         #region [extensions]
-        public static object ReflectItem(this object source, string expression, bool throwOnNoItemExists = true)
+        public static object ReflectItem(this object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem(source, expression, throwOnNoItemExists);
         }
 
-        public static T ReflectItem<T>(this object source, string expression, bool throwOnNoItemExists = true)
+        public static T ReflectItem<T>(this object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem<T>(source, expression, throwOnNoItemExists);
         }
@@ -23,38 +23,39 @@ namespace HatTrick.Reflection
         public static class Expression
         {
             #region reflect item
-            public static T ReflectItem<T>(object source, string expression, bool throwOnNoItemExists = true)
+            public static T ReflectItem<T>(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
             {
                 return (T)ReflectItem(source, expression, throwOnNoItemExists);
             }
 
-            public static object ReflectItem(object source, string expression, bool throwOnNoItemExists = true)
+            public static object ReflectItem(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
             {
                 if (source == null) { throw new ArgumentNullException(nameof(source)); }
-                if (expression == null) { throw new ArgumentNullException(nameof(expression)); }
+                if (expression.IsEmpty) { throw new ArgumentException($"{nameof(ReadOnlySpan<char>)} cannot be empty.", nameof(expression)); }
 
                 object o = source;
 
                 var itemExists = false;
 
                 int memberAccessorIdx = expression.IndexOf('.');
-                string thisExpression = (memberAccessorIdx > -1) ? expression.Substring(0, memberAccessorIdx) : expression;
+                ReadOnlySpan<char> thisExpression = (memberAccessorIdx > -1) ? expression.Slice(0, memberAccessorIdx) : expression;
 
                 //attempt dictionary lookup
                 if (source is IDictionary idict)
                 {
-                    if (idict.Contains(thisExpression))
+                    string expr = thisExpression.ToString();
+                    if (idict.Contains(expr))
                     {
                         itemExists = true;
-                        o = idict[thisExpression];
+                        o = idict[expr];
                     }
                 }
                 
                 if (!itemExists)//check for a property
                 {
                     Type t = o.GetType();
-
-                    PropertyInfo p = t.GetProperty(thisExpression);
+                    string expr = thisExpression.ToString();
+                    PropertyInfo p = t.GetProperty(expr);
 
                     if (p != null)
                     {
@@ -63,7 +64,7 @@ namespace HatTrick.Reflection
                     }
                     else //check for a field
                     {
-                        FieldInfo f = t.GetField(thisExpression);
+                        FieldInfo f = t.GetField(expr);
 
                         if (f != null)
                         {
@@ -76,12 +77,12 @@ namespace HatTrick.Reflection
                 if (itemExists && o != null && memberAccessorIdx > -1)
                 {
                     //recursive call...
-                    o = ReflectItem(o, expression.Substring(++memberAccessorIdx, expression.Length - memberAccessorIdx), throwOnNoItemExists);
+                    o = ReflectItem(o, expression.Slice(++memberAccessorIdx, expression.Length - memberAccessorIdx), throwOnNoItemExists);
                 }
 
                 if (!itemExists && throwOnNoItemExists)
                 {
-                    string expr = thisExpression.Length > 128 ? (expression.Substring(0, 125) + "...") : thisExpression;
+                    string expr = thisExpression.Length > 128 ? (expression.Slice(0, 125).ToString() + "...") : thisExpression.ToString();
                     throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{expr}'");
                 }
 

@@ -95,7 +95,7 @@ namespace HatTrick.Reflection.TestHarness
         }
         #endregion
 
-        #region reflcet from anonymous
+        #region reflect from anonymous
         static void ReflectFromAnonymousType()
         {
             var p = new
