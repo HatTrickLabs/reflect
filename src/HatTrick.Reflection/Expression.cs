@@ -7,7 +7,7 @@ namespace HatTrick.Reflection
 {
     public static partial class ReflectionHelper
     {
-        #region extension
+        #region [extensions]
         public static object ReflectItem(this object source, string expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem(source, expression, throwOnNoItemExists);
@@ -18,6 +18,8 @@ namespace HatTrick.Reflection
             return Expression.ReflectItem<T>(source, expression, throwOnNoItemExists);
         }
         #endregion
+
+        #region expression [class]
         public static class Expression
         {
             #region reflect item
@@ -87,5 +89,6 @@ namespace HatTrick.Reflection
             }
             #endregion
         }
+        #endregion
     }
 }

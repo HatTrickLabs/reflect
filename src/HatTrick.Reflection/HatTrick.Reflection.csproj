@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Authors>HatTrick Labs</Authors>
     <Description>Reflection utilities.</Description>
     <Copyright>Hat Trick Labs</Copyright>
-    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseUrl>
+    </PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/HatTrickLabs/reflect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HatTrickLabs/reflect</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -21,12 +21,11 @@ Added Hat Trick Labs nuget icon.</PackageReleaseNotes>
     <PackageIconUrl />
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\..\build\htl-nuget-logo.png">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
+      <PackagePath>
+      </PackagePath>
     </None>
   </ItemGroup>
-
 </Project>
