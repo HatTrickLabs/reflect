@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
     <Authors>HatTrick Labs</Authors>
     <Description>Reflection utilities.</Description>
     <Copyright>Hat Trick Labs</Copyright>
-    <PackageLicenseUrl>
-    </PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/HatTrickLabs/reflect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HatTrickLabs/reflect</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.6</Version>
-    <PackageReleaseNotes>Modified format of NoItemExistsException to improve readability.
-Moved sln file into repo root.
-Added Hat Trick Labs nuget icon.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgraded framework from netstandard2.0 to multi target net7.0, net8.0, net9.0
+Implemented ReadOnlySpan of char where possible.</PackageReleaseNotes>
     <Company>HatTrick Labs LLC</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>htl-nuget-logo.png</PackageIcon>
