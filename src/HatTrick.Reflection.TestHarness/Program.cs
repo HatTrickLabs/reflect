@@ -12,6 +12,14 @@ namespace HatTrick.Reflection.TestHarness
         #region main
         static void Main(string[] args)
         {
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("FirstName", (p) => p.FirstName);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("DateOfBirth", (p) => p.DateOfBirth);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("LastName", (p) => p.LastName);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.Line1", (p) => p.BillingAddress?.Line1);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.Line2", (p) => p.BillingAddress?.Line2);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.City", (p) => p.BillingAddress?.City);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.State", (p) => p.BillingAddress?.State);
+            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.Zip", (p) => p.BillingAddress?.Zip);
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
