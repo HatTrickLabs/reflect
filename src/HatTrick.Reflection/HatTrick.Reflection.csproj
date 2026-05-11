@@ -10,7 +10,7 @@
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>2.0.0</Version>
-    <PackageReleaseNotes>Upgraded framework from netstandard2.0 to multi target net7.0, net8.0, net9.0
+    <PackageReleaseNotes>Upgraded framework from netstandard2.0 to multi target net7.0, net8.0, net9.0.
 Implemented ReadOnlySpan of char where possible.</PackageReleaseNotes>
     <Company>HatTrick Labs LLC</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
