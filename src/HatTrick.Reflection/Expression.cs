@@ -7,12 +7,12 @@ namespace HatTrick.Reflection
     public static partial class ReflectionHelper
     {
         #region [extensions]
-        public static object ReflectItem(this object source, string expression, bool throwOnNoItemExists = true)
+        public static object ReflectItem(this object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem(source, expression, throwOnNoItemExists);
         }
 
-        public static T ReflectItem<T>(this object source, string expression, bool throwOnNoItemExists = true)
+        public static T ReflectItem<T>(this object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
         {
             return Expression.ReflectItem<T>(source, expression, throwOnNoItemExists);
         }
@@ -22,7 +22,7 @@ namespace HatTrick.Reflection
         public static class Expression
         {
             #region reflect item
-            public static T ReflectItem<T>(object source, string expression, bool throwOnNoItemExists = true)
+            public static T ReflectItem<T>(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
             {
                 return (T)ReflectItem(source, expression, throwOnNoItemExists);
             }
