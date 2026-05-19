@@ -22,39 +22,29 @@ namespace HatTrick.Reflection
         #region expression [class]
         public static class Expression
         {
-            private static Dictionary<(Type root, string expression), Func<object, object>> _cheats;
-            private static Dictionary<(Type root, string expression), Func<object, object>>.AlternateLookup<TypeSpanKey> _cheatLookup;
+            #region internals
+            private static Dictionary<(Type root, string expression), Func<object, object>> _helpers;
+            private static Dictionary<(Type root, string expression), Func<object, object>>.AlternateLookup<AlternateLookupKey> _helperAltLookup;
+            #endregion
 
+            #region ctors
             static Expression()
             {
-                _cheats = new Dictionary<(Type root, string expression), Func<object, object>>(32, new TypeSpanComparer());
-                _cheatLookup = _cheats.GetAlternateLookup<TypeSpanKey>();
+                _helpers = new Dictionary<(Type root, string expression), Func<object, object>>(new AlternateLookupComparer());
+                _helperAltLookup = _helpers.GetAlternateLookup<AlternateLookupKey>();
             }
+            #endregion
 
             #region register cheat
-            public static void RegisterCheat(Type type, ReadOnlySpan<char> expression, Func<object, object> cheat)
-            {
-                if (type is null)
-                    throw new ArgumentNullException(nameof(type));
-
-                if (expression.IsEmpty)
-                    throw new ArgumentException("argument cannot be empty.", nameof(expression));
-
-                if (cheat is null)
-                    throw new ArgumentNullException(nameof(cheat));
-
-                _cheats.Add((type, expression.ToString()), cheat);
-            }
-
-            public static void RegisterCheat<T>(ReadOnlySpan<char> expression, Func<T, object> cheat)
+            public static void RegisterHelper<T>(ReadOnlySpan<char> expression, Func<T, object> helper)
             {
                 if (expression.IsEmpty)
                     throw new ArgumentException("argument cannot be empty.", nameof(expression));
 
-                if (cheat is null)
-                    throw new ArgumentNullException(nameof(cheat));
+                if (helper is null)
+                    throw new ArgumentNullException(nameof(helper));
 
-                _cheats.Add((typeof(T), expression.ToString()), o => cheat((T)o));
+                _helpers.Add((typeof(T), expression.ToString()), o => helper((T)o));
             }
             #endregion
 
@@ -74,8 +64,8 @@ namespace HatTrick.Reflection
 
                 var exists = false;
 
-                Type t = source.GetType();
-                if (_cheatLookup.TryGetValue(new TypeSpanKey(t, expression), out var accessor))
+                Type type = source.GetType();
+                if (_helperAltLookup.TryGetValue(new AlternateLookupKey(type, expression), out var accessor))
                     return accessor(source);
 
                 int dotIdx = expression.IndexOf('.');
@@ -97,7 +87,7 @@ namespace HatTrick.Reflection
                 if (!exists)
                 {
                     //check for a property
-                    PropertyInfo p = t.GetProperty(name);
+                    PropertyInfo p = type.GetProperty(name);
                     if (p != null)
                     {
                         exists = true;
@@ -105,7 +95,7 @@ namespace HatTrick.Reflection
                     }
                     else //check for a field
                     {
-                        FieldInfo f = t.GetField(name);
+                        FieldInfo f = type.GetField(name);
                         if (f != null)
                         {
                             exists = true;
@@ -114,11 +104,8 @@ namespace HatTrick.Reflection
                     }
                 }
 
-                if (exists && source != null && dotIdx > -1)
-                {
-                    //recursive call...
+                if (exists && source != null && dotIdx > -1)//should do recursive call...
                     source = ReflectItem(source, expression.Slice(++dotIdx, expression.Length - dotIdx), throwOnNoItemExists);
-                }
 
                 if (!exists && throwOnNoItemExists)
                     throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{name}'");
@@ -128,40 +115,5 @@ namespace HatTrick.Reflection
             #endregion
         }
         #endregion
-
-        public readonly ref struct TypeSpanKey
-        {
-            public readonly Type Type;
-            public readonly ReadOnlySpan<char> Name;
-
-            public TypeSpanKey(Type type, ReadOnlySpan<char> name)
-            {
-                Type = type;
-                Name = name;
-            }
-        }
-
-        // 2. Implement the comparer using the custom ref struct
-        public sealed class TypeSpanComparer :
-            IEqualityComparer<(Type Type, string Name)>,
-            IAlternateEqualityComparer<TypeSpanKey, (Type Type, string Name)>
-        {
-            public bool Equals((Type Type, string Name) x, (Type Type, string Name) y) =>
-                x.Type == y.Type && x.Name == y.Name;
-
-            public int GetHashCode((Type Type, string Name) obj) =>
-                HashCode.Combine(obj.Type, obj.Name);
-
-            // Alternate Lookup methods using the custom ref struct
-            public bool Equals(TypeSpanKey alternate, (Type Type, string Name) other) =>
-                alternate.Type == other.Type && alternate.Name.SequenceEqual(other.Name);
-
-            public int GetHashCode(TypeSpanKey alternate) =>
-                HashCode.Combine(alternate.Type, string.GetHashCode(alternate.Name));
-
-            public (Type Type, string Name) Create(TypeSpanKey alternate) =>
-                (alternate.Type, alternate.Name.ToString());
-        }
-
     }
 }

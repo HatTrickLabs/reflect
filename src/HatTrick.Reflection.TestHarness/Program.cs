@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace HatTrick.Reflection.TestHarness
 {
     class Program
+
     {
         #region internals
         static Person _person;
@@ -12,24 +13,36 @@ namespace HatTrick.Reflection.TestHarness
         #region main
         static void Main(string[] args)
         {
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("FirstName", (p) => p.FirstName);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("DateOfBirth", (p) => p.DateOfBirth);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("LastName", (p) => p.LastName);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.Line1", (p) => p.BillingAddress?.Line1);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.Line2", (p) => p.BillingAddress?.Line2);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.City", (p) => p.BillingAddress?.City);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.State", (p) => p.BillingAddress?.State);
-            HatTrick.Reflection.ReflectionHelper.Expression.RegisterCheat<Person>("BillingAddress.Zip", (p) => p.BillingAddress?.Zip);
+            ReflectionHelper.Expression.RegisterHelper<Person>("FirstName", (p) => p.FirstName);
+            ReflectionHelper.Expression.RegisterHelper<Person>("DateOfBirth", (p) => p.DateOfBirth);
+            ReflectionHelper.Expression.RegisterHelper<Person>("LastName", (p) => p.LastName);
+            ReflectionHelper.Expression.RegisterHelper<Person>("BillingAddress.Line1", (p) => p.BillingAddress?.Line1);
+            ReflectionHelper.Expression.RegisterHelper<Person>("BillingAddress.Line2", (p) => p.BillingAddress?.Line2);
+            ReflectionHelper.Expression.RegisterHelper<Person>("BillingAddress.City", (p) => p.BillingAddress?.City);
+            ReflectionHelper.Expression.RegisterHelper<Person>("BillingAddress.State", (p) => p.BillingAddress?.State);
+            ReflectionHelper.Expression.RegisterHelper<Person>("BillingAddress.Zip", (p) => p.BillingAddress?.Zip);
+
+            //fields
+            ReflectionHelper.Expression.RegisterHelper<Person>("HouseholdPet.Name", (p) => p.HouseholdPet.Name);
+            ReflectionHelper.Expression.RegisterHelper<Person>("HouseholdPet.Age", (p) => p.HouseholdPet.Age);
+            ReflectionHelper.Expression.RegisterHelper<Person>("HouseholdPet.PetType", (p) => p.HouseholdPet.PetType);
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
 
             InitPerson();
 
-            //reflect from class 'properties'
-            ReflectPropertiesFromClass();
+            sw.Start();
 
-            //reflect from class 'fields'
-            ReflectFieldsFromClass();
+            for (int i = 0; i < 5_00_000; i++)
+            {
+                //reflect from class 'properties'
+                ReflectPropertiesFromClass();
+
+                //reflect from class 'fields'
+                ReflectFieldsFromClass();
+            }
+
+            sw.Stop();
+
 
             //reflect from anonymous type
             ReflectFromAnonymousType();
