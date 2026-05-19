@@ -32,7 +32,7 @@ namespace HatTrick.Reflection.TestHarness
 
             sw.Start();
 
-            for (int i = 0; i < 5_00_000; i++)
+            for (int i = 0; i < 1_00_000; i++)
             {
                 //reflect from class 'properties'
                 ReflectPropertiesFromClass();
