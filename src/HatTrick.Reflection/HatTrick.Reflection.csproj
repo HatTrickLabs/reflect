@@ -9,9 +9,10 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>Upgraded framework from netstandard2.0 to multi target net7.0, net8.0, net9.0
-Implemented ReadOnlySpan of char where possible.</PackageReleaseNotes>
+    <Version>3.0.0</Version>
+    <PackageReleaseNotes>Limited build target to net9.0.
+Expanded usage of ReadOnlySpan of char where possible.
+Implemented helper Func registration for hot paths on with known bind expressions.</PackageReleaseNotes>
     <Company>HatTrick Labs LLC</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>htl-nuget-logo.png</PackageIcon>
