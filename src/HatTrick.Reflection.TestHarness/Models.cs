@@ -42,7 +42,6 @@ namespace HatTrick.Reflection.TestHarness
     }
     #endregion
 
-
     #region pet type enum
     public enum PetType
     {

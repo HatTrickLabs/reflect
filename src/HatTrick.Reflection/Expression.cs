@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace HatTrick.Reflection
@@ -21,6 +22,32 @@ namespace HatTrick.Reflection
         #region expression [class]
         public static class Expression
         {
+            #region internals
+            private static Dictionary<(Type root, string expression), Func<object, object>> _helpers;
+            private static Dictionary<(Type root, string expression), Func<object, object>>.AlternateLookup<AlternateLookupKey> _helperAltLookup;
+            #endregion
+
+            #region ctors
+            static Expression()
+            {
+                _helpers = new Dictionary<(Type root, string expression), Func<object, object>>(new AlternateLookupComparer());
+                _helperAltLookup = _helpers.GetAlternateLookup<AlternateLookupKey>();
+            }
+            #endregion
+
+            #region register cheat
+            public static void RegisterHelper<T>(ReadOnlySpan<char> expression, Func<T, object> helper)
+            {
+                if (expression.IsEmpty)
+                    throw new ArgumentException("argument cannot be empty.", nameof(expression));
+
+                if (helper is null)
+                    throw new ArgumentNullException(nameof(helper));
+
+                _helpers.Add((typeof(T), expression.ToString()), o => helper((T)o));
+            }
+            #endregion
+
             #region reflect item
             public static T ReflectItem<T>(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
             {
@@ -37,9 +64,13 @@ namespace HatTrick.Reflection
 
                 var exists = false;
 
+                Type type = source.GetType();
+                if (_helperAltLookup.TryGetValue(new AlternateLookupKey(type, expression), out var accessor))
+                    return accessor(source);
+
                 int dotIdx = expression.IndexOf('.');
 
-                string name = (dotIdx > -1) 
+                string name = (dotIdx > -1)
                     ? expression.Slice(0, dotIdx).ToString()
                     : expression.ToString();
 
@@ -54,10 +85,9 @@ namespace HatTrick.Reflection
                 }
 
                 if (!exists)
-                {   
+                {
                     //check for a property
-                    Type t = source.GetType();
-                    PropertyInfo p = t.GetProperty(name);
+                    PropertyInfo p = type.GetProperty(name);
                     if (p != null)
                     {
                         exists = true;
@@ -65,7 +95,7 @@ namespace HatTrick.Reflection
                     }
                     else //check for a field
                     {
-                        FieldInfo f = t.GetField(name);
+                        FieldInfo f = type.GetField(name);
                         if (f != null)
                         {
                             exists = true;
@@ -74,11 +104,8 @@ namespace HatTrick.Reflection
                     }
                 }
 
-                if (exists && source != null && dotIdx > -1)
-                {
-                    //recursive call...
+                if (exists && source != null && dotIdx > -1)//should do recursive call...
                     source = ReflectItem(source, expression.Slice(++dotIdx, expression.Length - dotIdx), throwOnNoItemExists);
-                }
 
                 if (!exists && throwOnNoItemExists)
                     throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{name}'");
