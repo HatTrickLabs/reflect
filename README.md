@@ -5,7 +5,7 @@
 
 Reflect properties, fields, or dictionary values off any object using dotted-path expressions, with optional compiled-delegate helpers for hot paths.
 
-**[hattricklabs.com](https://hattricklabs.com)**
+**[NuGet](https://www.nuget.org/packages/HatTrick.Reflection/)** | **[hattricklabs.com](https://hattricklabs.com)**
 
 ---
 
