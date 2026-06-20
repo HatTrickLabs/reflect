@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net9.0</TargetFrameworks>
-    <Authors>HatTrick Labs</Authors>
+    <Authors>Jerrod Eiman</Authors>
     <Description>Reflection utilities.</Description>
     <Copyright>Hat Trick Labs</Copyright>
-    <PackageProjectUrl>https://github.com/HatTrickLabs/reflect</PackageProjectUrl>
+    <PackageProjectUrl>https//hattricklabs.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HatTrickLabs/reflect</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>reflection expression</PackageTags>

@@ -22,6 +22,10 @@ namespace HatTrick.Reflection
         #region expression [class]
         public static class Expression
         {
+            #region const
+            public const int MaxStackDepth = 16;
+            #endregion
+
             #region internals
             private static Dictionary<(Type root, string expression), Func<object, object>> _helpers;
             private static Dictionary<(Type root, string expression), Func<object, object>>.AlternateLookup<AlternateLookupKey> _helperAltLookup;
@@ -35,7 +39,7 @@ namespace HatTrick.Reflection
             }
             #endregion
 
-            #region register cheat
+            #region register helper
             public static void RegisterHelper<T>(ReadOnlySpan<char> expression, Func<T, object> helper)
             {
                 if (expression.IsEmpty)
@@ -56,6 +60,14 @@ namespace HatTrick.Reflection
 
             public static object ReflectItem(object source, ReadOnlySpan<char> expression, bool throwOnNoItemExists = true)
             {
+                return ReflectItemRecursive(source, expression, 1, throwOnNoItemExists);
+            }
+
+            private static object ReflectItemRecursive(object source, ReadOnlySpan<char> expression, int depth, bool throwOnNoItemExists)
+            {
+                if (depth > MaxStackDepth)
+                    throw new RecursionStackDepthException($"Recursion depth overflow...recursion depth cannot exceed {MaxStackDepth}");
+
                 if (source == null)
                     throw new ArgumentNullException(nameof(source));
 
@@ -105,7 +117,12 @@ namespace HatTrick.Reflection
                 }
 
                 if (exists && source != null && dotIdx > -1)//should do recursive call...
-                    source = ReflectItem(source, expression.Slice(++dotIdx, expression.Length - dotIdx), throwOnNoItemExists);
+                    source = ReflectItemRecursive(
+                        source, 
+                        expression.Slice(++dotIdx, expression.Length - dotIdx), 
+                        ++depth, 
+                        throwOnNoItemExists
+                    );
 
                 if (!exists && throwOnNoItemExists)
                     throw new NoItemExistsException($"Argument '{nameof(source)}' of type '{source.GetType().FullName}' does not contain a property, field or dictionary key of: '{name}'");
